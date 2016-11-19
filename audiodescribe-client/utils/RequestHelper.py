@@ -1,15 +1,16 @@
 import requests
-import time
+import os
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
 recognize_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
 _key = '7642486818ac4d34a8e0f0e055d9bcef'  # Here you have to paste your primary key
 json = None
-headers = dict()
-headers['Ocp-Apim-Subscription-Key'] = _key
-headers['Content-Type'] = 'application/octet-stream'
-_maxNumRetries = 1
+defaultHeaders = {
+'Ocp-Apim-Subscription-Key': _key
+}
+
+
 
 #
 # @app.route('/')
@@ -17,7 +18,8 @@ _maxNumRetries = 1
 #     return 'Hello World!'
 #
 
-def processRequest(data, params, url):
+
+def processRequest(data, params, url, headers):
     """
     Helper function to process the request to Project Oxford
 
@@ -27,6 +29,7 @@ def processRequest(data, params, url):
     headers: Used to pass the key information and the data type request
     :param url:
     """
+    headers.update(defaultHeaders)
 
     retries = 0
     result = None
@@ -47,7 +50,10 @@ def processRequest(data, params, url):
                 break
 
         elif response.status_code == 200 or response.status_code == 201:
-            if 'content-type' in response.headers and isinstance(response.headers['content-type'], str):
+            print (response.content)
+            if 'content-length' in response.headers and int(response.headers['content-length']) == 0:
+                result = None
+            elif 'content-type' in response.headers and isinstance(response.headers['content-type'], str):
                 if 'application/json' in response.headers['content-type'].lower():
                     result = response.json() if response.content else None
                 elif 'image' in response.headers['content-type'].lower():

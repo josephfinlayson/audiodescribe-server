@@ -20,12 +20,12 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
+
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            result = json.dumps({'error': True, 'message': 'no file')
+            result = json.dumps({'error': True, 'message': 'no file'})
             return Response(response=json.dumps(result), content_type='application/json')
-
 
         file = request.files['file']
 
