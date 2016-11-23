@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, send_from_directory, Response
 from utils.RequestHelper import processRequest
 import json
+import gevent.monkey
 
 app = Flask(__name__)
 
@@ -9,18 +10,16 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 emotion_url = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 recognize_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
+
 response_headers = dict()
 response_headers['Content-Type'] = 'application/json'
 
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+# for async stuff
+gevent.monkey.patch_all()
 
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -35,6 +34,10 @@ def upload_file():
             params = {'visualFeatures': 'Description,Faces'}
             result = processRequest(data, params, recognize_url)
 
+            asyncJobs = [gevent.spawn(processRequest, data, params, recognize_url),
+                         gevent.spawn(processRequest, data, params, emotion_url)]
+            gevent.joinall(asyncJobs, timeout=5)
+            print [job.value for job in asyncJobs]
             response = Response(response=json.dumps(result), content_type='application/json')
 
             return response
