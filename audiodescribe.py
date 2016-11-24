@@ -1,25 +1,48 @@
+import gevent.monkey
+gevent.monkey.patch_all()
+
 from flask import Flask, request, redirect, url_for, send_from_directory, Response
 from utils.RequestHelper import processRequest
 import json
-import gevent.monkey
 
 app = Flask(__name__)
+print __name__
+
+
+
 
 UPLOAD_FOLDER = './folder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 emotion_url = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
-recognize_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
+emotion_params = {}
+
+face_urls = 'https://api.projectoxford.ai/face/v1.0/detect[?returnFaceId][&returnFaceLandmarks][&returnFaceAttributes]'
+face_params = {'returnFaceAttributes': 'age, gender'}
+
+general_purpose_recognition_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
+general_purpose_params = {'visualFeatures': 'Description,Faces'}
+
+description_url = 'https://api.projectoxford.ai/vision/v1.0/describe'
+description_params = {'maxCandidates': 3}
+
+ocr_url = 'https://api.projectoxford.ai/vision/v1.0/ocr'
+ocr_params = {'detectOrientation': True}
 
 response_headers = dict()
 response_headers['Content-Type'] = 'application/json'
 
+items = [1, 2, 3, 4, 5]
+
+
+squared = list(map(lambda x: x**2, items))
+
+print squared
 # for async stuff
-gevent.monkey.patch_all()
 
 
 @app.route('/', methods=['GET', 'POST'])
-def upload_file():
+def recognize_image():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -28,14 +51,19 @@ def upload_file():
 
         file = request.files['file']
 
+
         if file:
             data = file.read()
 
-            params = {'visualFeatures': 'Description,Faces'}
-            result = processRequest(data, params, recognize_url)
+            result = processRequest(data, general_purpose_params, general_purpose_recognition_url)
 
-            asyncJobs = [gevent.spawn(processRequest, data, params, recognize_url),
-                         gevent.spawn(processRequest, data, params, emotion_url)]
+            # we hit all APIs simultaneously, getting a plain english description of an image,
+
+            asyncJobs = [
+                         gevent.spawn(processRequest, data, general_purpose_params, general_purpose_recognition_url),
+                         gevent.spawn(processRequest, data, general_purpose_params, emotion_url),
+                         gevent.spawn(processRequest, data, general_purpose_params, ocr_url)]
+
             gevent.joinall(asyncJobs, timeout=5)
             print [job.value for job in asyncJobs]
             response = Response(response=json.dumps(result), content_type='application/json')
