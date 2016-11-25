@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f915fd9-e0f6-4221-8b73-42e260e25373" name="Default" comment="Expand readme">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="5f915fd9-e0f6-4221-8b73-42e260e25373" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/audiodescribe.py" afterPath="$PROJECT_DIR$/audiodescribe.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/interpret.py" afterPath="$PROJECT_DIR$/utils/interpret.py" />
     </list>
     <ignored path="audiodescribe.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="audiodescribe.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/audiodescribe.py">
+      <file leaf-file-name="interpret.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/interpret.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="591">
-              <caret line="72" column="19" lean-forward="false" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+            <state relative-caret-position="455">
+              <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -66,10 +65,10 @@
         <option value="$PROJECT_DIR$/utils/processRequesti.py" />
         <option value="$PROJECT_DIR$/audiodescribe-client/client.py" />
         <option value="$PROJECT_DIR$/utils/sampleData.py" />
-        <option value="$PROJECT_DIR$/utils/interpret.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/utils/RequestHelper.py" />
         <option value="$PROJECT_DIR$/audiodescribe.py" />
+        <option value="$PROJECT_DIR$/utils/interpret.py" />
       </list>
     </option>
   </component>
@@ -713,7 +712,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1479414823252</updated>
-      <workItem from="1480070169486" duration="12891000" />
+      <workItem from="1480070169486" duration="13084000" />
     </task>
     <task id="LOCAL-00001" summary="Expand readme">
       <created>1480071030642</created>
@@ -778,11 +777,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480090573161</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Always save the image">
+      <created>1480094148897</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1480094148897</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12891000" />
+    <option name="totallyTimeSpent" value="13084000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1428" height="1022" extended-state="0" />
@@ -842,7 +848,8 @@
     <MESSAGE value="Expand readme" />
     <MESSAGE value="json..." />
     <MESSAGE value="Fixes, cleanup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixes, cleanup." />
+    <MESSAGE value="Always save the image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Always save the image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -853,7 +860,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="507">
           <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding />
+          <folding>
+            <marker date="1480093895000" expanded="true" signature="1172:1242" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1308:3589" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1341:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1435:1596" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1652:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1721:2024" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2042:2109" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2232:2571" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2704:2901" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="3342:3589" ph="'''...'''" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -888,7 +906,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1480093895000" expanded="true" signature="1172:1242" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1308:3589" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1341:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1435:1596" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1652:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1721:2024" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2042:2109" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2232:2571" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2704:2901" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="3342:3589" ph="'''...'''" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -951,20 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/interpret.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <marker date="1480076150000" expanded="true" signature="40:308" ph="..." />
-            <marker date="1480076150000" expanded="true" signature="338:779" ph="..." />
-            <marker date="1480076150000" expanded="true" signature="811:1018" ph="..." />
-            <marker date="1480076150000" expanded="true" signature="1053:1103" ph="..." />
-            <marker date="1480076150000" expanded="true" signature="1135:1442" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/RequestHelper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -997,8 +1012,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/audiodescribe.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="72" column="19" lean-forward="false" selection-start-line="72" selection-start-column="19" selection-end-line="72" selection-end-column="19" />
+        <state relative-caret-position="292">
+          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <marker date="1480093895000" expanded="true" signature="1172:1242" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1308:3589" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1341:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1435:1596" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1652:3329" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="1721:2024" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2042:2109" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2232:2571" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="2704:2901" ph="..." />
+            <marker date="1480093895000" expanded="true" signature="3342:3589" ph="'''...'''" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/interpret.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
           <folding />
         </state>
       </provider>

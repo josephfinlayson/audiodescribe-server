@@ -25,7 +25,8 @@ def getFaceDescription(faceList):
 def getDescription(responses):
     results = []
     if 'general' in responses:
-        results.append(getFaceDescription(responses['general']['faces']))
+        if 'faces' in responses['general'] and responses['general']['faces']:
+            results.append(getFaceDescription(responses['general']['faces']))
 
     if not results:
         description = "Sorry, didn't see anything"
