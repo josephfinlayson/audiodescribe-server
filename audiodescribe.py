@@ -55,18 +55,18 @@ def recognize_image():
                 data = None
                 filename = str(uuid.uuid1()) + '.jpg'
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                img_url = url_for('uploaded_image', filename=filename, _external=True)
-                print 'img_url: ', img_url
+                img_json = {'img_url': url_for('uploaded_image', filename=filename, _external=True)}
+                print 'img_json: ', img_json
             else:
                 data = file.read()
-                img_url = None
+                img_json = None
 
             # we hit all APIs simultaneously, getting a plain english description of an image,
 
             asyncJobs = [
-                         gevent.spawn(processRequest, data, img_url, general_purpose_params, general_purpose_recognition_url),
-                         gevent.spawn(processRequest, data, img_url, general_purpose_params, emotion_url),
-                         gevent.spawn(processRequest, data, img_url, general_purpose_params, ocr_url)]
+                         gevent.spawn(processRequest, data, img_json, general_purpose_params, general_purpose_recognition_url),
+                         gevent.spawn(processRequest, data, img_json, general_purpose_params, emotion_url),
+                         gevent.spawn(processRequest, data, img_json, general_purpose_params, ocr_url)]
 
             gevent.joinall(asyncJobs, timeout=10)
             general, emotions, ocr = [job.value for job in asyncJobs]
