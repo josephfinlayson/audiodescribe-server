@@ -55,7 +55,7 @@ def recognize_image():
                 data = None
                 filename = str(uuid.uuid1()) + '.jpg'
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                img_json = {'img_url': url_for('uploaded_image', filename=filename, _external=True)}
+                img_json = json.encode({'img_url': url_for('uploaded_image', filename=filename, _external=True)})
                 print 'img_json: ', img_json
             else:
                 data = file.read()
