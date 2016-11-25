@@ -3,6 +3,7 @@ gevent.monkey.patch_all()
 
 from flask import Flask, request, redirect, url_for, send_from_directory, Response
 from utils.RequestHelper import processRequest
+from utils.interpret import getDescription
 import json
 
 app = Flask(__name__)
@@ -32,14 +33,6 @@ ocr_params = {'detectOrientation': True}
 response_headers = dict()
 response_headers['Content-Type'] = 'application/json'
 
-items = [1, 2, 3, 4, 5]
-
-
-squared = list(map(lambda x: x**2, items))
-
-print squared
-# for async stuff
-
 
 @app.route('/', methods=['GET', 'POST'])
 def recognize_image():
@@ -65,8 +58,11 @@ def recognize_image():
                          gevent.spawn(processRequest, data, general_purpose_params, ocr_url)]
 
             gevent.joinall(asyncJobs, timeout=5)
-            print [job.value for job in asyncJobs]
-            response = Response(response=json.dumps(result), content_type='application/json')
+            general, emotions, ocr = [job.value for job in asyncJobs]
+
+            api_responses = {"general": general, "emotions": emotions, "ocr": ocr}
+
+            response = Response(response=json.dumps(getDescription(api_responses)), content_type='application/json')
 
             return response
 
