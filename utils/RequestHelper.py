@@ -33,17 +33,17 @@ def processRequest(data, params, url):
 
     while True:
         response = requests.request('post', url, json=json, data=data, headers=headers, params=params)
-        print response.status_code
+        print '%s - %d'%(url, response.status_code)
         if response.status_code == 429:
 
-            print("Message: %s" % (response.json()['error']['message']))
+            print("%s - Message: %s" % (url, response.json()['error']['message']))
 
             if retries <= _maxNumRetries:
                 time.sleep(1)
                 retries += 1
                 continue
             else:
-                print('Error: failed after retrying!')
+                print('%s - Error: failed after retrying!'%(url,))
                 break
 
         elif response.status_code == 200 or response.status_code == 201:
@@ -53,8 +53,8 @@ def processRequest(data, params, url):
                 elif 'image' in response.headers['content-type'].lower():
                     result = response.content
         else:
-            print("Error code: %d" % (response.status_code))
-            print("Message: %s" % (response.json()))
+            print("%s - Error code: %d" % (url, response.status_code))
+            print("%s - Message: %s" % (url, response.json()))
 
         break
 

@@ -48,8 +48,6 @@ def recognize_image():
         if file:
             data = file.read()
 
-            result = processRequest(data, general_purpose_params, general_purpose_recognition_url)
-
             # we hit all APIs simultaneously, getting a plain english description of an image,
 
             asyncJobs = [
@@ -57,7 +55,7 @@ def recognize_image():
                          gevent.spawn(processRequest, data, general_purpose_params, emotion_url),
                          gevent.spawn(processRequest, data, general_purpose_params, ocr_url)]
 
-            gevent.joinall(asyncJobs, timeout=5)
+            gevent.joinall(asyncJobs, timeout=10)
             general, emotions, ocr = [job.value for job in asyncJobs]
 
             api_responses = {"general": general, "emotions": emotions, "ocr": ocr}

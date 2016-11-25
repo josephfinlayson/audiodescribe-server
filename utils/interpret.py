@@ -5,7 +5,6 @@ def reduceFacesIntoGenderAndAge(pv, cv):
     return cv
 
 def getFaceObject(faceList):
-    print 'faceList:', faceList
     ages = map(lambda faceObject: faceObject['age'], faceList)
     faceObject = reduce(reduceFacesIntoGenderAndAge, faceList, {'numberOfMen': 0, 'numberOfWomen': 0})
 
