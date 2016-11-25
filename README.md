@@ -3,8 +3,16 @@
 # Install dependencies:
     pip install requests
     pip install flask
+    pip install gevent
     
 # Run server:
+
+Doesn't reload on changes:
+
+    FLASK_APP=audiodescribe.py flask run
+    
+Debug, reloads, causes issues for gevent, there's a different way:
+
     FLASK_APP=audiodescribe.py FLASK_DEBUG=1 flask run
 
 # TODO:
