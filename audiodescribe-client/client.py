@@ -6,6 +6,21 @@ from pydub import AudioSegment
 from pydub.playback import play
 import json
 
+import picamera
+from gpiozero import Button
+from signal import pause
+
+camera = picamera.PiCamera()
+
+def takePictureAndSayDescription():
+    camera.capture('image.jpg')
+
+BUTTON_PIN = 2
+button = Button(BUTTON_PIN)
+button.when_pressed = takePictureAndSayDescription
+
+
+
 #
 # def getDescriptorForImage(image):
 #     payload = {'file': open(image, "rb")}
@@ -30,3 +45,4 @@ import json
 
 # descriptionString = getDescriptorForImage('sample.jpg')
 # sayText(descriptor['description']['captions'][0]['text'])
+pause()
