@@ -1,21 +1,7 @@
 import requests
 import time
-from flask import Flask, request, redirect, url_for, send_from_directory
-from werkzeug.utils import secure_filename
 
-recognize_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
-_key = '7642486818ac4d34a8e0f0e055d9bcef'  # Here you have to paste your primary key
-json = None
-headers = dict()
-headers['Ocp-Apim-Subscription-Key'] = _key
-headers['Content-Type'] = 'application/octet-stream'
-_maxNumRetries = 1
-
-#
-# @app.route('/')
-# def hello_world():
-#     return 'Hello World!'
-#
+_maxNumRetries = 0
 
 def processRequest(data, json, params, url):
     """
@@ -32,6 +18,13 @@ def processRequest(data, json, params, url):
     result = None
 
     while True:
+        _key = '7642486818ac4d34a8e0f0e055d9bcef'  # Here you have to paste your primary key
+        headers = {'Ocp-Apim-Subscription-Key': _key}
+        if json:
+            headers['Content-Type'] = 'application/json'
+        else:
+            headers['Content-Type'] = 'application/octet-stream'
+
         response = requests.request('post', url, json=json, data=data, headers=headers, params=params)
         print '%s - %d'%(url, response.status_code)
         if response.status_code == 429:
