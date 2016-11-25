@@ -5,15 +5,17 @@ from flask import Flask, request, redirect, url_for, send_from_directory, Respon
 from utils.RequestHelper import processRequest
 from utils.interpret import getDescription
 import json
+import os.path
+import uuid
 
 app = Flask(__name__)
-print __name__
 
 
 
 
 UPLOAD_FOLDER = './folder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SEND_IMAGE_URL'] = False
 
 emotion_url = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 emotion_params = {}
@@ -44,16 +46,22 @@ def recognize_image():
 
         file = request.files['file']
 
-
         if file:
-            data = file.read()
+            if app.config['SEND_IMAGE_URL']:
+                data = None
+                filename = uuid.uuid1() + '.jpg'
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                img_url = url_for('uploaded_image', filename)
+            else:
+                data = file.read()
+                img_url = None
 
             # we hit all APIs simultaneously, getting a plain english description of an image,
 
             asyncJobs = [
-                         gevent.spawn(processRequest, data, general_purpose_params, general_purpose_recognition_url),
-                         gevent.spawn(processRequest, data, general_purpose_params, emotion_url),
-                         gevent.spawn(processRequest, data, general_purpose_params, ocr_url)]
+                         gevent.spawn(processRequest, data, img_url, general_purpose_params, general_purpose_recognition_url),
+                         gevent.spawn(processRequest, data, img_url, general_purpose_params, emotion_url),
+                         gevent.spawn(processRequest, data, img_url, general_purpose_params, ocr_url)]
 
             gevent.joinall(asyncJobs, timeout=10)
             general, emotions, ocr = [job.value for job in asyncJobs]

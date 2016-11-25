@@ -17,7 +17,7 @@ _maxNumRetries = 1
 #     return 'Hello World!'
 #
 
-def processRequest(data, params, url):
+def processRequest(data, json, params, url):
     """
     Helper function to process the request to Project Oxford
 
