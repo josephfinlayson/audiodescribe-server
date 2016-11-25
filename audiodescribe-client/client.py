@@ -1,25 +1,32 @@
-import requests
-from gtts import gTTS
-import uuid
-# system dependency on ffmpeg ->
-from pydub import AudioSegment
-from pydub.playback import play
-import json
-
-import picamera
+# import requests
+# from gtts import gTTS
+# import uuid
+# # system dependency on ffmpeg ->
+# from pydub import AudioSegment
+# from pydub.playback import play
+# import json
+#
+# import picamera
 from gpiozero import Button
 from signal import pause
 
-camera = picamera.PiCamera()
-
-def takePictureAndSayDescription():
-    camera.capture('image.jpg')
-
-BUTTON_PIN = 2
-button = Button(BUTTON_PIN)
-button.when_pressed = takePictureAndSayDescription
+# camera = picamera.PiCamera()
 
 
+def recognize():
+    print 'pressed '
+
+RECOGNIZE_BUTTON_PIN = 18
+recognize_button = Button(RECOGNIZE_BUTTON_PIN)
+recognize_button.when_pressed = recognize
+
+
+def ocr():
+    print 'ocr pressed '
+
+OCR_BUTTON_PIN = 23
+ocr_button = Button(OCR_BUTTON_PIN)
+ocr_button.when_pressed = ocr
 
 #
 # def getDescriptorForImage(image):
