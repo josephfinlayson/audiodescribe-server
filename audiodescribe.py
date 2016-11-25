@@ -51,6 +51,7 @@ def recognize_image():
         file = request.files['file']
 
         if file:
+            data = None
             if app.config['SEND_IMAGE_URL']:
                 data = None
                 filename = str(uuid.uuid1()) + '.jpg'
@@ -67,6 +68,13 @@ def recognize_image():
                          gevent.spawn(processRequest, data, img_json, general_purpose_params, general_purpose_recognition_url),
                          gevent.spawn(processRequest, data, img_json, general_purpose_params, emotion_url),
                          gevent.spawn(processRequest, data, img_json, general_purpose_params, ocr_url)]
+
+            # Always save the image, but if we don't need the links, wait until we've fired off the requests.
+            if data:
+                filename = str(uuid.uuid1()) + '.jpg'
+                fd = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'wb')
+                fd.write(data)
+                fd.close()
 
             gevent.joinall(asyncJobs, timeout=10)
             general, emotions, ocr = [job.value for job in asyncJobs]
