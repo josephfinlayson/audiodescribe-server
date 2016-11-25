@@ -30,8 +30,8 @@
       <file leaf-file-name="interpret.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils/interpret.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="455">
-              <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
+            <state relative-caret-position="416">
+              <caret line="32" column="11" lean-forward="false" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -712,7 +712,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1479414823252</updated>
-      <workItem from="1480070169486" duration="13084000" />
+      <workItem from="1480070169486" duration="13510000" />
     </task>
     <task id="LOCAL-00001" summary="Expand readme">
       <created>1480071030642</created>
@@ -784,11 +784,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480094148897</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Handle missing faces.">
+      <created>1480094326391</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1480094326391</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13084000" />
+    <option name="totallyTimeSpent" value="13510000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1428" height="1022" extended-state="0" />
@@ -849,7 +856,8 @@
     <MESSAGE value="json..." />
     <MESSAGE value="Fixes, cleanup." />
     <MESSAGE value="Always save the image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Always save the image" />
+    <MESSAGE value="Handle missing faces." />
+    <option name="LAST_COMMIT_MESSAGE" value="Handle missing faces." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -967,19 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/sampleData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-          <folding>
-            <marker date="1480073134000" expanded="true" signature="21:1469" ph="..." />
-            <marker date="1480073134000" expanded="true" signature="36:954" ph="..." />
-            <marker date="1480073134000" expanded="true" signature="1044:1415" ph="..." />
-            <marker date="1480073134000" expanded="true" signature="1182:1414" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/RequestHelper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1029,10 +1024,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/sampleData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+          <folding>
+            <marker date="1480073134000" expanded="true" signature="21:1469" ph="..." />
+            <marker date="1480073134000" expanded="true" signature="36:954" ph="..." />
+            <marker date="1480073134000" expanded="true" signature="1044:1415" ph="..." />
+            <marker date="1480073134000" expanded="true" signature="1182:1414" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/interpret.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="35" column="58" lean-forward="false" selection-start-line="35" selection-start-column="58" selection-end-line="35" selection-end-column="58" />
+        <state relative-caret-position="416">
+          <caret line="32" column="11" lean-forward="false" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
           <folding />
         </state>
       </provider>

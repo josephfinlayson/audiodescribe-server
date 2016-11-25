@@ -17,7 +17,7 @@ def getFaceObject(faceList):
     return faceObject
 
 def getFaceString(faceObject):
-    return 'it contains ' + str(faceObject['numberOfMen']) + ' men, and ' + str(faceObject['numberOfWomen']) + ' women. The ages range from ' + str(faceObject['ageMin']) + ' to ' + str(faceObject['ageMax'])
+    return str(faceObject['numberOfMen']) + ' men, and ' + str(faceObject['numberOfWomen']) + ' women. Ages from ' + str(faceObject['ageMin']) + ' to ' + str(faceObject['ageMax'])
 
 def getFaceDescription(faceList):
     return getFaceString(getFaceObject(faceList))
@@ -25,6 +25,8 @@ def getFaceDescription(faceList):
 def getDescription(responses):
     results = []
     if 'general' in responses:
+        # TODO, handle missing
+        results.append(responses['general']['description']['captions'][0]['text'])
         if 'faces' in responses['general'] and responses['general']['faces']:
             results.append(getFaceDescription(responses['general']['faces']))
 
