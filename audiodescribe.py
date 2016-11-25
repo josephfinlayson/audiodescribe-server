@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = './folder'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['SEND_IMAGE_URL'] = False
+app.config['SEND_IMAGE_URL'] = False#True
 
 emotion_url = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 emotion_params = {}
@@ -35,6 +35,10 @@ ocr_params = {'detectOrientation': True}
 response_headers = dict()
 response_headers['Content-Type'] = 'application/json'
 
+@app.route('/uploads/<filename>')
+def uploaded_image(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def recognize_image():
@@ -49,9 +53,10 @@ def recognize_image():
         if file:
             if app.config['SEND_IMAGE_URL']:
                 data = None
-                filename = uuid.uuid1() + '.jpg'
+                filename = str(uuid.uuid1()) + '.jpg'
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                img_url = url_for('uploaded_image', filename)
+                img_url = url_for('uploaded_image', filename=filename, _external=True)
+                print 'img_url: ', img_url
             else:
                 data = file.read()
                 img_url = None

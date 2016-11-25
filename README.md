@@ -11,6 +11,10 @@ Doesn't reload on changes:
 
     FLASK_APP=audiodescribe.py flask run
     
+And publicly accessible:
+
+    FLASK_APP=audiodescribe.py flask run --host=0.0.0.0
+    
 Debug, reloads, causes issues for gevent, there's a different way:
 
     FLASK_APP=audiodescribe.py FLASK_DEBUG=1 flask run
