@@ -3,7 +3,7 @@ import time
 
 _maxNumRetries = 0
 
-def processRequest(data, json, params, url):
+def processRequest(name, data, json, params, url):
     """
     Helper function to process the request to Project Oxford
 
@@ -51,4 +51,4 @@ def processRequest(data, json, params, url):
 
         break
 
-    return result
+    return (name, result)

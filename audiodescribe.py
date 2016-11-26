@@ -64,10 +64,19 @@ def recognize_image():
 
             # we hit all APIs simultaneously, getting a plain english description of an image,
 
-            asyncJobs = [
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, general_purpose_recognition_url),
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, emotion_url),
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, ocr_url)]
+            jobs = []
+
+            if request.args.get('general', 'true') == 'true':
+                jobs.append( (processRequest, 'general', data, img_json, general_purpose_params, general_purpose_recognition_url) )
+
+            if request.args.get('emotions', 'true') == 'true':
+                jobs.append( (processRequest, 'emotions', data, img_json, general_purpose_params, emotion_url) )
+
+            if request.args.get('ocr', 'true') == 'true':
+                jobs.append( (processRequest, 'ocr', data, img_json, general_purpose_params, ocr_url) )
+
+
+            asyncJobs = [ gevent.spawn(*jobArgs) for jobArgs in jobs ]
 
             # Always save the image, but if we don't need the links, wait until we've fired off the requests.
             if data:
@@ -77,9 +86,8 @@ def recognize_image():
                 fd.close()
 
             gevent.joinall(asyncJobs, timeout=10)
-            general, emotions, ocr = [job.value for job in asyncJobs]
 
-            api_responses = {"general": general, "emotions": emotions, "ocr": ocr}
+            api_responses = dict(job.value for job in asyncJobs)
 
             response = Response(response=json.dumps(getDescription(api_responses)), content_type='application/json')
 
