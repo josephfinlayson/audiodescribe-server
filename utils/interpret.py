@@ -1,26 +1,9 @@
-def reduceFacesIntoGenderAndAge(pv, cv):
-    cv['numberOfMen'] = pv['numberOfMen'] + 1 if cv['gender'] == "Male" else pv['numberOfMen']
-    cv['numberOfWomen'] = pv['numberOfWomen'] + 1 if cv['gender'] == "Female" else pv['numberOfWomen']
-    # map ages into list, get highest and lower of list
-    return cv
+def getFaceDescription(faces):
+    ages = set(face['age'] for face in faces)
+    no_of_men = len([face for face in faces if face['gender'] == 'Male'])
+    no_of_women = len([face for face in faces if face['gender'] == 'Female'])
 
-def getFaceObject(faceList):
-    ages = map(lambda faceObject: faceObject['age'], faceList)
-    faceObject = reduce(reduceFacesIntoGenderAndAge, faceList, {'numberOfMen': 0, 'numberOfWomen': 0})
-
-    faceObject['ageMax'] = reduce(lambda pv, cv: pv if (pv > cv) else cv, ages)
-    faceObject['ageMin'] = reduce(lambda pv, cv: pv if (pv < cv) else cv, ages)
-    del faceObject['faceRectangle']
-    del faceObject['gender']
-    del faceObject['age']
-
-    return faceObject
-
-def getFaceString(faceObject):
-    return str(faceObject['numberOfMen']) + ' men, and ' + str(faceObject['numberOfWomen']) + ' women. Ages from ' + str(faceObject['ageMin']) + ' to ' + str(faceObject['ageMax'])
-
-def getFaceDescription(faceList):
-    return getFaceString(getFaceObject(faceList))
+    return '%d men, and %d women. Ages from %d to %d'%(no_of_men, no_of_women, min(ages), max(ages))
 
 def getDescription(responses):
     results = []
