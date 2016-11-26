@@ -24,7 +24,7 @@ face_urls = 'https://api.projectoxford.ai/face/v1.0/detect[?returnFaceId][&retur
 face_params = {'returnFaceAttributes': 'age, gender'}
 
 general_purpose_recognition_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
-general_purpose_params = {'visualFeatures': 'Description,Faces'}
+general_purpose_params = {'visualFeatures': 'Description,Faces,Categories,Tags'}
 
 description_url = 'https://api.projectoxford.ai/vision/v1.0/describe'
 description_params = {'maxCandidates': 3}
@@ -64,10 +64,28 @@ def recognize_image():
 
             # we hit all APIs simultaneously, getting a plain english description of an image,
 
-            asyncJobs = [
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, general_purpose_recognition_url),
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, emotion_url),
-                         gevent.spawn(processRequest, data, img_json, general_purpose_params, ocr_url)]
+            jobs = []
+
+            is_ocr = (request.args.get('ocr', '') == 'true')
+
+            if not is_ocr and request.args.get('general', 'true') == 'true':
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'general', access_key, data, img_json, general_purpose_params, general_purpose_recognition_url) )
+
+            if not is_ocr and request.args.get('description', 'true') == 'true':
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'description', access_key, data, img_json, description_params, description_url) )
+
+            if not is_ocr and request.args.get('emotions', 'true') == 'true':
+                access_key = '280d47484b624fdc8183ed688222d22a'
+                jobs.append( (processRequest, 'emotions', access_key, data, img_json, general_purpose_params, emotion_url) )
+
+            if is_ocr:
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'ocr', access_key, data, img_json, general_purpose_params, ocr_url) )
+
+
+            asyncJobs = [ gevent.spawn(*jobArgs) for jobArgs in jobs ]
 
             # Always save the image, but if we don't need the links, wait until we've fired off the requests.
             if data:
@@ -77,15 +95,12 @@ def recognize_image():
                 fd.close()
 
             gevent.joinall(asyncJobs, timeout=10)
-            general, emotions, ocr = [job.value for job in asyncJobs]
 
-            api_responses = {"general": general, "emotions": emotions, "ocr": ocr}
+            api_responses = dict(job.value for job in asyncJobs)
 
-            response = Response(response=json.dumps(getDescription(api_responses)), content_type='application/json')
+            response = Response(response=json.dumps(getDescription(api_responses, request.args)), content_type='application/json')
 
             return response
-
-            # return redirect(url_for('uploaded_file', filename=filename))
 
     return '''
     <!doctype html>
