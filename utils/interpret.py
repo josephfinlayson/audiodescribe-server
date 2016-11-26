@@ -20,7 +20,6 @@ def getEmotionDescription(responses, _):
         emotions = responses['emotions']
         if emotions:
             emotion = primary_emotion(emotions)
-            print 'primary: %s'%(emotion,)
             mapping = {
                 "sadness": 'sad',
                 "neutral": 'neutral',
