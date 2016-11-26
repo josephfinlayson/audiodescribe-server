@@ -1,4 +1,38 @@
 import traceback
+import collections
+
+def highest_emotion(emotion_obj):
+    scores = emotion_obj['scores'].items()
+
+    def second(t): return t[1]
+
+    return reversed(sorted(scores, key=second)).next()[0]
+
+def primary_emotion(emotions):
+    emotion_counts = collections.Counter()
+    for e in emotions:
+        emotion_counts[highest_emotion(e)] += 1
+
+    return emotion_counts.most_common(1)[0][0]
+
+def getEmotionDescription(responses, _):
+    if 'emotions' in responses:
+        emotions = responses['emotions']
+        if emotions:
+            emotion = primary_emotion(emotions)
+            print 'primary: %s'%(emotion,)
+            mapping = {
+                "sadness": 'sad',
+                "neutral": 'neutral',
+                "contempt": 'contemptuous',
+                "disgust": 'disgusted',
+                "anger": 'angry',
+                "surprise": 'surprised',
+                "fear": 'fearful',
+                "happiness": 'happy'
+            }
+            mapped_emotion = mapping[emotion]
+            return "People seem mostly %s"%(mapped_emotion)
 
 def getCaption(responses, _):
     if 'general' in responses:
@@ -14,7 +48,7 @@ def getFaceDescription(responses, _):
 
             return '%d men, and %d women. Ages from %d to %d'%(no_of_men, no_of_women, min(ages), max(ages))
 
-describers = [getCaption, getFaceDescription]
+describers = [getCaption, getFaceDescription, getEmotionDescription]
 
 def getDescription(responses, request_args):
     results = []

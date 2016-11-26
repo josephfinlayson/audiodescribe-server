@@ -24,7 +24,7 @@ face_urls = 'https://api.projectoxford.ai/face/v1.0/detect[?returnFaceId][&retur
 face_params = {'returnFaceAttributes': 'age, gender'}
 
 general_purpose_recognition_url = 'https://api.projectoxford.ai/vision/v1.0/analyze'
-general_purpose_params = {'visualFeatures': 'Description,Faces'}
+general_purpose_params = {'visualFeatures': 'Description,Faces,Categories,Tags'}
 
 description_url = 'https://api.projectoxford.ai/vision/v1.0/describe'
 description_params = {'maxCandidates': 3}
@@ -67,13 +67,20 @@ def recognize_image():
             jobs = []
 
             if request.args.get('general', 'true') == 'true':
-                jobs.append( (processRequest, 'general', data, img_json, general_purpose_params, general_purpose_recognition_url) )
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'general', access_key, data, img_json, general_purpose_params, general_purpose_recognition_url) )
+
+            if request.args.get('description', 'true') == 'true':
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'description', access_key, data, img_json, description_params, general_purpose_recognition_url) )
 
             if request.args.get('emotions', 'true') == 'true':
-                jobs.append( (processRequest, 'emotions', data, img_json, general_purpose_params, emotion_url) )
+                access_key = '280d47484b624fdc8183ed688222d22a'
+                jobs.append( (processRequest, 'emotions', access_key, data, img_json, general_purpose_params, emotion_url) )
 
             if request.args.get('ocr', 'true') == 'true':
-                jobs.append( (processRequest, 'ocr', data, img_json, general_purpose_params, ocr_url) )
+                access_key = '7642486818ac4d34a8e0f0e055d9bcef'
+                jobs.append( (processRequest, 'ocr', access_key, data, img_json, general_purpose_params, ocr_url) )
 
 
             asyncJobs = [ gevent.spawn(*jobArgs) for jobArgs in jobs ]

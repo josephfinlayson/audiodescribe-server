@@ -3,7 +3,7 @@ import time
 
 _maxNumRetries = 0
 
-def processRequest(name, data, json, params, url):
+def processRequest(name, _key, data, json, params, url):
     """
     Helper function to process the request to Project Oxford
 
@@ -18,7 +18,6 @@ def processRequest(name, data, json, params, url):
     result = None
 
     while True:
-        _key = '7642486818ac4d34a8e0f0e055d9bcef'  # Here you have to paste your primary key
         headers = {'Ocp-Apim-Subscription-Key': _key}
         if json:
             headers['Content-Type'] = 'application/json'
