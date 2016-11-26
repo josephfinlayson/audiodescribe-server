@@ -4,6 +4,8 @@
     pip install requests
     pip install flask
     pip install gevent
+    pip install google-api-python-client
+    pip install Pillow
     
 # Run server:
 

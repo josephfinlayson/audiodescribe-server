@@ -4,6 +4,7 @@ gevent.monkey.patch_all()
 from flask import Flask, request, redirect, url_for, send_from_directory, Response
 from utils.RequestHelper import processRequest
 from utils.interpret import getDescription
+from utils.google_ocr import get_google_ocr
 import json
 import os.path
 import uuid
@@ -68,6 +69,8 @@ def recognize_image():
 
             is_ocr = (request.args.get('ocr', '') == 'true')
 
+            use_google_ocr = True
+
             if not is_ocr and request.args.get('general', 'true') == 'true':
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
                 jobs.append( (processRequest, 'general', access_key, data, img_json, general_purpose_params, general_purpose_recognition_url) )
@@ -80,9 +83,12 @@ def recognize_image():
                 access_key = '280d47484b624fdc8183ed688222d22a'
                 jobs.append( (processRequest, 'emotions', access_key, data, img_json, general_purpose_params, emotion_url) )
 
-            if is_ocr:
+            if is_ocr and not use_google_ocr:
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
                 jobs.append( (processRequest, 'ocr', access_key, data, img_json, general_purpose_params, ocr_url) )
+
+            if is_ocr and use_google_ocr:
+                jobs.append( (get_google_ocr, data) )
 
 
             asyncJobs = [ gevent.spawn(*jobArgs) for jobArgs in jobs ]

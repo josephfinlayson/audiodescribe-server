@@ -60,8 +60,17 @@ def getOCR(responses, _):
         if lines and len(lines[0]) > 0:
             return "\n".join(lines)
 
+def getGoogleOCR(responses, _):
+    descriptions = []
+    if 'ocr-google' in responses:
+        descriptions.append(responses['ocr-google']['responses'][0]['textAnnotations'][0]['description'])
+        #for textAnnotation in responses['ocr-google']['responses'][0]['textAnnotations']:
+        #    descriptions.append(textAnnotation['description'])
+    if descriptions:
+        return " ".join(descriptions)
 
-describers = [getCaption, getFaceDescription, getEmotionDescription, getOCR]
+
+describers = [getCaption, getFaceDescription, getEmotionDescription, getOCR, getGoogleOCR]
 
 def getDescription(responses, request_args):
     results = []
