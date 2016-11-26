@@ -66,19 +66,21 @@ def recognize_image():
 
             jobs = []
 
-            if request.args.get('general', 'true') == 'true':
+            is_ocr = (request.args.get('ocr', '') == 'true')
+
+            if not is_ocr and request.args.get('general', 'true') == 'true':
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
                 jobs.append( (processRequest, 'general', access_key, data, img_json, general_purpose_params, general_purpose_recognition_url) )
 
-            if request.args.get('description', 'true') == 'true':
+            if not is_ocr and request.args.get('description', 'true') == 'true':
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
                 jobs.append( (processRequest, 'description', access_key, data, img_json, description_params, description_url) )
 
-            if request.args.get('emotions', 'true') == 'true':
+            if not is_ocr and request.args.get('emotions', 'true') == 'true':
                 access_key = '280d47484b624fdc8183ed688222d22a'
                 jobs.append( (processRequest, 'emotions', access_key, data, img_json, general_purpose_params, emotion_url) )
 
-            if request.args.get('ocr', 'true') == 'true':
+            if is_ocr:
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
                 jobs.append( (processRequest, 'ocr', access_key, data, img_json, general_purpose_params, ocr_url) )
 
