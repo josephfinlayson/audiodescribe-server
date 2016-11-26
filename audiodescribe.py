@@ -72,7 +72,7 @@ def recognize_image():
 
             if request.args.get('description', 'true') == 'true':
                 access_key = '7642486818ac4d34a8e0f0e055d9bcef'
-                jobs.append( (processRequest, 'description', access_key, data, img_json, description_params, general_purpose_recognition_url) )
+                jobs.append( (processRequest, 'description', access_key, data, img_json, description_params, description_url) )
 
             if request.args.get('emotions', 'true') == 'true':
                 access_key = '280d47484b624fdc8183ed688222d22a'

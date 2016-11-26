@@ -47,7 +47,21 @@ def getFaceDescription(responses, _):
 
             return '%d men, and %d women. Ages from %d to %d'%(no_of_men, no_of_women, min(ages), max(ages))
 
-describers = [getCaption, getFaceDescription, getEmotionDescription]
+def getOCR(responses, _):
+    if 'ocr' in responses:
+        lines = []
+        ocr = responses['ocr']
+        for region_obj in ocr['regions']:
+            for line_obj in region_obj['lines']:
+                line_words = []
+                for word_obj in line_obj['words']:
+                    line_words.append(word_obj['text'])
+                lines.append(' '.join(line_words))
+        if lines and len(lines[0]) > 0:
+            return "\n".join(lines)
+
+
+describers = [getCaption, getFaceDescription, getEmotionDescription, getOCR]
 
 def getDescription(responses, request_args):
     results = []
