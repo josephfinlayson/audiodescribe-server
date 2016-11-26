@@ -89,11 +89,9 @@ def recognize_image():
 
             api_responses = dict(job.value for job in asyncJobs)
 
-            response = Response(response=json.dumps(getDescription(api_responses)), content_type='application/json')
+            response = Response(response=json.dumps(getDescription(api_responses, request.args)), content_type='application/json')
 
             return response
-
-            # return redirect(url_for('uploaded_file', filename=filename))
 
     return '''
     <!doctype html>

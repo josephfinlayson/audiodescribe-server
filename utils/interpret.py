@@ -1,10 +1,10 @@
 import traceback
 
-def getCaption(responses):
+def getCaption(responses, _):
     if 'general' in responses:
         return responses['general']['description']['captions'][0]['text']
 
-def getFaceDescription(responses):
+def getFaceDescription(responses, _):
     if 'general' in responses:
         if 'faces' in responses['general'] and responses['general']['faces']:
             faces = responses['general']['faces']
@@ -16,12 +16,12 @@ def getFaceDescription(responses):
 
 describers = [getCaption, getFaceDescription]
 
-def getDescription(responses):
+def getDescription(responses, request_args):
     results = []
     failed = []
     for describer in describers:
         try:
-            description = describer(responses)
+            description = describer(responses, request_args)
             if description:
                 results.append(description)
         except Exception as err:
