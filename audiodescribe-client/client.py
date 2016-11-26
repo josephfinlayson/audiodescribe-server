@@ -40,8 +40,11 @@ ocr_button = Button(OCR_BUTTON_PIN)
 ocr_button.when_pressed = ocr
 
 def sendRequest(filename, type):
+    params = {}
+    if type == 'ocr':
+        params['ocr'] = "true"
     payload = {'file': open(filename, "rb")}
-    response = requests.post(API_URL, files=payload)
+    response = requests.post(API_URL, files=payload, params=params)
     content = json.loads(response.content)
     desc = content['description']
     print desc
